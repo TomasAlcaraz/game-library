@@ -1,5 +1,11 @@
+body {
+  background-image: url("./background_landingpage.png");
+  background-attachment: fixed;
+}
 .App {
   text-align: center;
+  width: 100%;
+  height: 100vh;
 }
 
 .App-logo {

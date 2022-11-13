@@ -8,7 +8,7 @@ async function dataGames(type, value) {
   if (type === "name") {
     value = value.split(" ").join("-").toLowerCase();
     data = await axios.get(
-      `https://api.rawg.io/api/games?search=${value}&key=${APIKEY}&page_size=15`
+      `https://api.rawg.io/api/games?search=${value}&key=${APIKEY}`
     );
     return data.results;
   }
@@ -27,46 +27,64 @@ gameContrl.getByName = async (req, res) => {
   try {
     if (name) {
       const gamesDB = await Videogame.findAll({ where: { name: name } });
+      if (gamesDB) return res.json(gamesDB);
       try {
         const gamesAPI = await dataGames("name", name).map((game) => {
           return {
-            id: game.id,
-            name: game.name,
-            background_image: game.background_image,
-            rating: game.rating,
-            genres: game.genres.map((g) => g.name),
+            id: gamesAPI.id,
+            name: gamesAPI.name,
+            description: gamesAPI.description,
+            image: gamesAPI.background_image,
+            released: gamesAPI.released,
+            rating: gamesAPI.rating,
+            genres: gamesAPI.genres.map((g) => g.name),
+            platforms: gamesAPI.platforms.map((g) => g.platform.name),
           };
         });
-
-        const games = [...gamesDB, ...gamesAPI];
-        return games.splice(0, 16);
+        if (gamesAPI) return res.json(gamesAPI);
+        else throw new Error();
       } catch (e) {
         return res.status(404).send(`No se encuentran resultados de ${name}`);
       }
     }
 
     const games = await Videogame.findAll({ include: [Genre] });
-    return res.json(games);
+    return res.json(games.splice(0, 16));
   } catch (e) {
-    return res.status(404).send("No hay videojuegos disponibles");
+    return res.status(404).send("No video games available");
   }
 };
 
 gameContrl.getById = async (req, res) => {
-  const { idVideogame } = req.params;
+  const { id } = req.params;
   try {
     const gameDB = await Videogame.findOne({
       where: {
-        id: idVideogame,
+        id: id,
       },
       include: [Genre],
     });
     if (gameDB) return res.json(gameDB);
 
-    const gameAPI = await dataGames("id", idVideogame);
-    if (gameAPI) return res.json(gameAPI);
-
-    return res.status(404).send("No hay resultados");
+    const gameAPI = await dataGames("id", id);
+    if (gameAPI) {
+      let formated = [
+        {
+          id: gameAPI.id,
+          name: gameAPI.name,
+          description: gameAPI.description,
+          image: gameAPI.background_image,
+          released: gameAPI.released,
+          rating: gameAPI.rating,
+          genres: gameAPI.genres.map((g) => g.name),
+          platforms: gameAPI.platforms.map((g) => g.platform.name),
+        },
+      ];
+      formated.length
+        ? res.status(200).json(formated)
+        : res.status(404).send("Did not find game by Id");
+    }
+    return res.status(404).send("No results found");
   } catch (e) {
     return res.status(404).send("Error");
   }
