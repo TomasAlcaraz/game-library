@@ -1,51 +1,66 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import logo from "./logo.png";
 import BurguerButton from "../BurguerButton/BurguerButton.jsx";
 import styled from "styled-components";
+import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllGames, getGenres } from "../../redux/actions";
 
 function Navbar() {
   const [clicked, setClicked] = useState(false);
+  // const genres = useSelector(state => state.Genres)
+  const history = useHistory();
+  const dispatch = useDispatch();
   const handleClick = () => {
     setClicked(!clicked);
   };
+  useEffect(() => {
+    dispatch(getAllGames());
+    dispatch(getGenres());
+  }, []);
   return (
-    <>
-      <Router>
-        <NavContainer>
-          <img src={logo} className="logo" alt="logo" />
-          <div className={`links ${clicked ? "active" : ""}`}>
+    history.pathname !== "/" && (
+      <NavContainer>
+        <img src={logo} className="logo" alt="logo" />
+        <div className={`links ${clicked ? "active" : ""}`}>
+          <NavLink to="/home">
             <a onClick={handleClick} href="">
               Home
             </a>
-            <a onClick={handleClick} href="">
-              Games
-            </a>
+          </NavLink>
+          <NavLink to="/about">
             <a onClick={handleClick} href="">
               About
             </a>
+          </NavLink>
+          <NavLink to="/contact">
             <a onClick={handleClick} href="">
               Contact
             </a>
-          </div>
-          <div className="burguer">
-            <BurguerButton clicked={clicked} handleClick={handleClick} />
-          </div>
-          <BgDiv className={`initial ${clicked ? " active" : ""}`}></BgDiv>
-        </NavContainer>
-      </Router>
-    </>
+          </NavLink>
+          <NavLink to="/form">
+            <a onClick={handleClick} href="">
+              Add Games
+            </a>
+          </NavLink>
+        </div>
+        <div className="burguer">
+          <BurguerButton clicked={clicked} handleClick={handleClick} />
+        </div>
+        <BgDiv className={`initial ${clicked ? " active" : ""}`}></BgDiv>
+      </NavContainer>
+    )
   );
 }
 
 export default Navbar;
 
 const NavContainer = styled.nav`
-  @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
   position: fixed;
   display: flex;
   width: 100%;
-  background-color: #0C131C;
+  background-color: #0c121a;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   align-items: center;
   justify-content: space-between;
@@ -60,7 +75,7 @@ const NavContainer = styled.nav`
   a {
     color: #acadbf;
     text-decoration: none;
-    margin-right: 3rem;
+    margin-right: 2rem;
   }
   .links {
     position: absolute;
@@ -75,7 +90,7 @@ const NavContainer = styled.nav`
       color: #d3e2ff;
       font-size: 2rem;
       display: block;
-      font-family: 'Rubik', sans-serif;
+      font-family: "Rubik", sans-serif;
     }
     @media (min-width: 768px) {
       position: initial;
@@ -121,7 +136,7 @@ const NavContainer = styled.nav`
 `;
 
 const BgDiv = styled.div`
-  background-color: #0C131C;
+  background-color: #0c131c;
   position: absolute;
   top: -1000px;
   left: -1000px;
@@ -129,14 +144,17 @@ const BgDiv = styled.div`
   height: 100%;
   z-index: -1;
   transition: all 0.6s ease;
-  &.active {
-    display: flex;
-    align-items: center;
-    border-radius: 0 0 40% 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    margin-top: 4rem;
+
+  @media (max-width: 768px) {
+    &.active {
+      display: flex;
+      align-items: center;
+      border-radius: 0 0 40% 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      margin-top: 4rem;
+    }
   }
 `;

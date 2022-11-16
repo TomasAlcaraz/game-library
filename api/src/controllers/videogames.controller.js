@@ -1,7 +1,19 @@
 const { Videogame, Genre } = require("../db");
+require("dotenv").config();
 const { APIKEY } = process.env;
 const axios = require("axios");
 const gameContrl = {};
+
+// api calls function
+async function allGames() {
+  let games = [];
+  for (let i = 1; i <= 5; i++) {
+    data = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
+    games = games.concat(data.data.results);
+    data = data.data.next;
+  }
+  return games;
+}
 
 async function dataGames(type, value) {
   let data;
@@ -10,84 +22,130 @@ async function dataGames(type, value) {
     data = await axios.get(
       `https://api.rawg.io/api/games?search=${value}&key=${APIKEY}`
     );
-    return data.results;
+    return data.data.results;
   }
   if (type === "id") {
     data = await axios.get(
       `https://api.rawg.io/api/games/${value}?key=${APIKEY}`
     );
-    return data.results;
+    return data.data;
   }
-  data = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
-  return data.results;
+  return "Error";
 }
 
-gameContrl.getByName = async (req, res) => {
+// busca un juego por su nombre o devuelve los 100 primeros juegos
+gameContrl.getGames = async (req, res) => {
   const { name } = req.query;
   try {
     if (name) {
-      const gamesDB = await Videogame.findAll({ where: { name: name } });
-      if (gamesDB) return res.json(gamesDB);
       try {
-        const gamesAPI = await dataGames("name", name).map((game) => {
+        const gamesDB = await Videogame.findAll({
+          where: { name: name },
+          include: [Genre],
+        });
+
+        const callAPI = await dataGames("name", name);
+        const gamesAPI = callAPI.map((game) => {
           return {
-            id: gamesAPI.id,
-            name: gamesAPI.name,
-            description: gamesAPI.description,
-            image: gamesAPI.background_image,
-            released: gamesAPI.released,
-            rating: gamesAPI.rating,
-            genres: gamesAPI.genres.map((g) => g.name),
-            platforms: gamesAPI.platforms.map((g) => g.platform.name),
+            id: game.id,
+            name: game.name,
+            image: game.background_image,
+            genres: game.genres.map((g) => g.name),
+            description: game.description,
+            released: game.released,
+            platforms: game.platforms.map((g) => g.platform.name),
+            rating: game.rating,
           };
         });
-        if (gamesAPI) return res.json(gamesAPI);
-        else throw new Error();
+
+        const result = [...gamesDB, ...gamesAPI];
+        return res.json(result);
       } catch (e) {
-        return res.status(404).send(`No se encuentran resultados de ${name}`);
+        return res.status(404).send(`The game: ${name} not found`);
       }
     }
-
-    const games = await Videogame.findAll({ include: [Genre] });
-    return res.json(games.splice(0, 16));
+    const games = await allGames();
+    const result = games.map((game) => {
+      return {
+        id: game.id,
+        name: game.name,
+        image: game.background_image,
+        genres: game.genres.map((g) => g.name),
+        description: game.description,
+        released: game.released,
+        platforms: game.platforms.map((g) => g.platform.name),
+        rating: game.rating,
+      };
+    });
+    return res.send(result);
   } catch (e) {
-    return res.status(404).send("No video games available");
+    return res.status(404).send("No videogames available");
   }
 };
 
+// buscar un juego por su id
 gameContrl.getById = async (req, res) => {
   const { id } = req.params;
   try {
-    const gameDB = await Videogame.findOne({
-      where: {
-        id: id,
-      },
-      include: [Genre],
-    });
-    if (gameDB) return res.json(gameDB);
+    if (id.includes("-")) {
+      const gameDB = await Videogame.findOne({
+        where: id,
+        include: [Genre],
+      });
+      return res.json(gameDB);
+    }
 
     const gameAPI = await dataGames("id", id);
+    console.log(gameAPI);
     if (gameAPI) {
-      let formated = [
-        {
-          id: gameAPI.id,
-          name: gameAPI.name,
-          description: gameAPI.description,
-          image: gameAPI.background_image,
-          released: gameAPI.released,
-          rating: gameAPI.rating,
-          genres: gameAPI.genres.map((g) => g.name),
-          platforms: gameAPI.platforms.map((g) => g.platform.name),
-        },
-      ];
-      formated.length
-        ? res.status(200).json(formated)
-        : res.status(404).send("Did not find game by Id");
+      let formated = {
+        id: gameAPI.id,
+        name: gameAPI.name,
+        description: gameAPI.description,
+        image: gameAPI.background_image,
+        released: gameAPI.released,
+        rating: gameAPI.rating,
+        genres: gameAPI.genres.map((g) => g.name),
+        platforms: gameAPI.platforms.map((g) => g.platform.name),
+      };
+      return res.json(formated);
     }
     return res.status(404).send("No results found");
   } catch (e) {
     return res.status(404).send("Error");
   }
 };
+
+// crear un juego
+gameContrl.createGame = async (req, res) => {
+  const { name, description, released, rating, platforms, image } = req.body;
+  try {
+    const gameCreated = await Videogame.create({
+      name,
+      description,
+      released,
+      rating,
+      platforms,
+      image,
+    });
+
+    // const genreInDb = await Genre.findAll({
+    //   where: { name: genres },
+    // });
+    // gameCreated.addGenre(genreInDb);
+    res.send(gameCreated);
+  } catch (e) {
+    res.status(404).send(e.message);
+  }
+};
+
+// delate
+// gameContrl.delateGame = async (req, res) => {
+//   try {
+//     await Videogame.delate()
+//   } catch (e) {
+
+//   }
+// }
 
 module.exports = gameContrl;
