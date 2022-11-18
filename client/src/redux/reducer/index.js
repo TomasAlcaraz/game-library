@@ -38,5 +38,17 @@ export default function rootReducer(state = initialState, action) {
       Detail: action.payload,
     };
   }
+  if (action.type === FILTER_BY) {
+    if (action.order === "genres") {
+      const allGames = state.Games;
+      const gamesAPI = allGames.filter((game) =>
+        game.genres.includes(action.payload)
+      );
+      return {
+        ...state,
+        Games: gamesAPI,
+      };
+    }
+  }
   return { ...state };
 }

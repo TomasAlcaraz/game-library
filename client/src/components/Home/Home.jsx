@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Cards from "../Cards/Cards.jsx";
 import search_icon from "./search_icon.svg";
 import { useSelector } from "react-redux";
 
 export default function Home() {
+  // Paginado escalable por la cantidad de juegos
   const [pages, setPages] = useState(0);
   const allGames = useSelector((state) => state.Games);
   const numPages = Math.round(allGames.length / 15);
-  // Paginado escalable por la cantidad de juegos
   function paging(num) {
     const arrPages = [];
     for (let i = num; i > 0; i--) {
@@ -20,10 +20,6 @@ export default function Home() {
     <HomeContainer>
       <div className="home">
         <div className="area">
-          <div className="search_input">
-            <img src={search_icon}></img>
-            <input placeholder="search"></input>
-          </div>
           <form>
             <select className="favoriteOnly" placeholder="genres">
               <option hidden value="Select">
@@ -54,7 +50,11 @@ export default function Home() {
               <option>aventure</option>
             </select>
           </form>
-          <div className="">
+          <div className="search_input">
+            <img src={search_icon}></img>
+            <input></input>
+          </div>
+          <div className="pages">
             {paging(numPages).map((p, i) => (
               <button
                 key={i}
@@ -76,21 +76,31 @@ export default function Home() {
 }
 
 const HomeContainer = styled.nav`
+  @import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
   .search_input {
     display: flex;
     height: 2.8rem;
     width: 18rem;
     align-items: center;
     border-radius: 150px 150px 150px 150px;
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-      rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    background-color: #1c3763;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    background-color: #607493;
     transition: all 0.6s ease;
     &:hover {
       transition: 0.4s;
       height: 3rem;
       width: 18.5rem;
       border: none;
+    }
+    input {
+      height: 1.7rem;
+      width: 14rem;
+      border: none;
+      outline: none;
+      background-color: #607493;
+      border-radius: 5px;
+      color: white;
+      transition: all 0.6s ease;
     }
     img {
       margin-left: 0.8rem;
@@ -100,8 +110,8 @@ const HomeContainer = styled.nav`
   }
   .favoriteOnly {
     margin-left: 1rem;
-    height: 2.7rem;
-    background: #1c3763;
+    height: 2rem;
+    background: #0d141e;
     border-radius: 2px;
     border: none;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
@@ -119,7 +129,6 @@ const HomeContainer = styled.nav`
     display: flex;
     width: 100%;
     flex-direction: column;
-    gap: 4rem;
     h2 {
       color: white;
       left: 2rem;
@@ -137,23 +146,43 @@ const HomeContainer = styled.nav`
       margin-top: 8rem;
       height: 7rem;
       gap: 3rem;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
       @media (max-width: 768px) {
-        margin-bottom: 4.5rem;
+        margin-bottom: 5rem;
+      }
+      form {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
       }
       h3 {
         color: white;
       }
-      input {
-        height: 1.7rem;
-        width: 14rem;
-        border: none;
-        outline: none;
-        background-color: #1c3763;
-        border-radius: 5px;
-        color: white;
-        transition: all 0.6s ease;
+      .pages {
+        display: flex;
+        align-items: flex-end;
+        width: 11rem;
+        height: 1.4rem;
+        gap: 4px;
+        background-color: #0d141e;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+          rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+          rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        padding: 0.8rem;
+        border-radius: 3px;
+        button {
+          border: none;
+          outline: none;
+          background: none;
+          color: white;
+          font-size: 1rem;
+          font-family: "Russo One", sans-serif;
+          &:hover {
+            color: #158ad8;
+            cursor: pointer;
+          }
+        }
       }
     }
   }

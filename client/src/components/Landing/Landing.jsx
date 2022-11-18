@@ -1,20 +1,14 @@
 import React from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
-
+import { NavLink } from "react-router-dom";
 export default function Landing() {
-  const history = useHistory();
+
 
   return (
     <LandingContainer>
-      <button
-        onClick={() => {
-          history.push("/home");
-        }}
-        className="btn"
-      >
-        ENTER
-      </button>
+      <NavLink>
+        <button>ENTER</button>
+      </NavLink>
     </LandingContainer>
   );
 }
@@ -23,6 +17,5 @@ const LandingContainer = styled.div`
   width: 100%;
   height: 100vh;
   .btn {
-
   }
 `;

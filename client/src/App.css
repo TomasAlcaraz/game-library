@@ -1,5 +1,6 @@
 body {
-  background-image: url("./background_landingpage.png");
+  /* background-image: url("./background_landingpage.png"); */
+  background-color: #0D141E;
   background-attachment: fixed;
 }
 .App {

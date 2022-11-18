@@ -1,25 +1,19 @@
 import "./App.css";
 import React from "react";
-import { Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import Home from "./components/Home/Home.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
-import Landing from "./components/Landing/Landing";
-import Form from "./components/Form/Form";
+import Landing from "./components/Landing/Landing.jsx";
+import Form from "./components/Form/Form.jsx";
 
 function App() {
   return (
     <AppContainer>
-      <Navbar />
-      <Route exact path="/">
-        <Landing />
-      </Route>
-      <Route path="/home">
-        <Home />
-      </Route>
-      <Route path="/form">
-        <Form />
-      </Route>
+        <Route path="/" component={Navbar} />
+        <Route exact path="/" component={Landing} />
+        <Route path="/home" component={Home} />
+        <Route path="/form" component={Form} />
     </AppContainer>
   );
 }

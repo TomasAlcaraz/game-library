@@ -43,3 +43,15 @@ export function getGenres() {
       .catch((e) => e.message);
   };
 }
+
+export function orderBy(order) {
+  return function (dispatch) {
+    dispatch({ type: ORDER_BY, order: order });
+  };
+}
+
+export function filterBy(order) {
+  return function (dispatch) {
+    dispatch({ type: FILTER_BY, order: order });
+  };
+}

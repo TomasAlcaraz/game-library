@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.png";
 import BurguerButton from "../BurguerButton/BurguerButton.jsx";
 import styled from "styled-components";
-import { NavLink, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { getAllGames, getGenres } from "../../redux/actions";
 
 function Navbar() {
   const [clicked, setClicked] = useState(false);
-  // const genres = useSelector(state => state.Genres)
-  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const handleClick = () => {
     setClicked(!clicked);
@@ -19,7 +18,7 @@ function Navbar() {
     dispatch(getGenres());
   }, []);
   return (
-    history.pathname !== "/" && (
+    location.pathname !== "/" && (
       <NavContainer>
         <img src={logo} className="logo" alt="logo" />
         <div className={`links ${clicked ? "active" : ""}`}>
@@ -65,6 +64,7 @@ const NavContainer = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 4px;
+  margin-top: -1.4rem;
   padding-right: 4rem;
   .logo {
     width: 3.4rem;
@@ -75,7 +75,7 @@ const NavContainer = styled.nav`
   a {
     color: #acadbf;
     text-decoration: none;
-    margin-right: 2rem;
+    margin-right: 1.1rem;
   }
   .links {
     position: absolute;
@@ -144,7 +144,6 @@ const BgDiv = styled.div`
   height: 100%;
   z-index: -1;
   transition: all 0.6s ease;
-
   @media (max-width: 768px) {
     &.active {
       display: flex;
