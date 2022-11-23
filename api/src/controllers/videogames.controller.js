@@ -6,13 +6,35 @@ const gameContrl = {};
 
 // api calls function
 async function allGames() {
-  let games = [];
+  let gamesAPI = [];
+  let info = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
   for (let i = 1; i <= 5; i++) {
-    data = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
-    games = games.concat(data.data.results);
-    data = data.data.next;
+    gamesAPI = gamesAPI.concat(info.data.results);
+    info = await axios.get(info.data.next);
   }
-  return games;
+  // let gamesDB = await Videogame.findAll({
+  //   include: Genre,
+  // });
+  // const promise = new Promise()
+  // let jsonGames = gamesDB.map((game) => game.toJSON())
+  // jsonGames.forEach(game => {
+  //   game.genres = game.genres.map((genre) => genre.name).filter(p => p != null).join(', ')
+  // });
+
+  // console.log(jsonGames);
+  // const games = gamesDB.concat(gamesAPI);
+  return gamesAPI;
+
+  // Pomise.all
+  // const pages = [1, 2, 3, 4, 5].map((page) => {
+  //   return axios.get(
+  //     `https://api.rawg.io/api/games?key=${APIKEY}&page=${page}`
+  //   );
+  // });
+
+  // const games = await Promise.all(pages);
+  // console.log(games);
+  // return games;
 }
 
 async function dataGames(type, value) {
@@ -135,6 +157,7 @@ gameContrl.createGame = async (req, res) => {
     // gameCreated.addGenre(genreInDb);
     res.send(gameCreated);
   } catch (e) {
+    console.log(e);
     res.status(404).send(e.message);
   }
 };

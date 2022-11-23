@@ -27,16 +27,6 @@ function Navbar() {
               Home
             </a>
           </NavLink>
-          <NavLink to="/about">
-            <a onClick={handleClick} href="">
-              About
-            </a>
-          </NavLink>
-          <NavLink to="/contact">
-            <a onClick={handleClick} href="">
-              Contact
-            </a>
-          </NavLink>
           <NavLink to="/form">
             <a onClick={handleClick} href="">
               Add Games
@@ -59,12 +49,11 @@ const NavContainer = styled.nav`
   position: fixed;
   display: flex;
   width: 100%;
-  background-color: #0c121a;
+  background-color: #1C273A;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   align-items: center;
   justify-content: space-between;
   padding: 4px;
-  margin-top: -1.4rem;
   padding-right: 4rem;
   .logo {
     width: 3.4rem;

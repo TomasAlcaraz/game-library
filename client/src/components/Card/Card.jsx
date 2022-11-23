@@ -5,7 +5,7 @@ import styled from "styled-components";
 function Card({ name, image, genres, rating }) {
   return (
     <CardContainer>
-      <img src={image}></img>
+      <img className="imgGames" src={image}></img>
       <div className="content">
         <div className="genres">
           {genres.map((g) => {
@@ -26,18 +26,19 @@ const CardContainer = styled.nav`
   @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,200&display=swap");
   display: flex;
   flex-direction: column;
-  background-color: #131c2a;
+  background-color: #1c2433;
   border-radius: 5px;
+  margin-top: 1rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  /* margin-top: 3rem; */
-  transition: all 0.5s ease;
+  text-decoration-line: none;
+  transition: all 0.6s ease;
   &:hover {
     margin-top: -3rem;
     cursor: pointer;
   }
-  img {
+  .imgGames {
     width: 350px;
     aspect-ratio: auto 360 / 210;
     height: 200px;
@@ -46,12 +47,15 @@ const CardContainer = styled.nav`
   }
   .content {
     display: flex;
-    padding: 10px;
-    height: 8rem;
+    padding: 0.3rem;
+    height: 9rem;
+    width: 331px;
+    gap: 0.4rem;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    background-color: #131c2a;
+    margin: 0 auto;
     font-family: "Rubik", sans-serif;
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
@@ -71,7 +75,7 @@ const CardContainer = styled.nav`
       font-family: "Russo One", sans-serif;
       color: #a8a8a1;
       font-size: 0.9rem;
-      margin-left: 16.5rem;
+      margin-left: 18rem;
     }
   }
 `;

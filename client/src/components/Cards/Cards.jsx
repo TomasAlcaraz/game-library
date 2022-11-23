@@ -1,25 +1,41 @@
 import React from "react";
 import styled from "styled-components";
 import Card from "../../components/Card/Card.jsx";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import loading from "./loading.gif";
 
 function Cards({ pages }) {
   const games = useSelector((state) => state.Games);
+  const filters = useSelector((state) => state.Filters);
+  function selection() {
+    if (filters.length) {
+      return filters;
+    }
+    return games;
+  }
   return (
     <CardsContainer>
       <div className="cards">
-        {games.length &&
-          games
+        {selection().length ? (
+          selection()
             .slice(pages, pages + 15)
             .map((g) => (
-              <Card
-                key={g.id}
-                rating={g.rating}
-                name={g.name}
-                image={g.image}
-                genres={g.genres}
-              />
-            ))}
+              <NavLink to={`/videogame/${g.id}`} className="active">
+                <Card
+                  key={g.id}
+                  rating={g.rating}
+                  name={g.name}
+                  image={g.image}
+                  genres={g.genres}
+                />
+              </NavLink>
+            ))
+        ) : (
+          <div className="loading_cards">
+            <img src={loading} />
+          </div>
+        )}
       </div>
     </CardsContainer>
   );
@@ -28,19 +44,35 @@ function Cards({ pages }) {
 export default Cards;
 
 const CardsContainer = styled.div`
-  width: 82%;
+  display: flex;
+  width: 100%;
+  margin-top: 8rem;
+  color: aliceblue;
+  justify-content: center;
+  .active {
+    text-decoration: none;
+  }
   .cards {
     display: flex;
+    width: 80%;
+    /* margin: 0 12.6rem; */
     justify-content: start;
-    gap: 2.5rem;
+    gap: 2rem;
     align-items: center;
-    margin: 1rem;
-    margin-top: 6rem;
-    margin-bottom: 5rem;
+    padding-bottom: 3rem;
+    margin-bottom: 2rem;
     border-radius: 3px;
     flex-wrap: wrap;
     @media (max-width: 768px) {
       padding: 1.1rem;
+      justify-content: center;
     }
+  }
+  .loading_cards {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: flex-start;
   }
 `;
