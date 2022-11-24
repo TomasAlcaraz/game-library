@@ -60,7 +60,6 @@ const CardsContainer = styled.div`
     gap: 2rem;
     align-items: center;
     padding-bottom: 3rem;
-    margin-bottom: 2rem;
     border-radius: 3px;
     flex-wrap: wrap;
     @media (max-width: 768px) {

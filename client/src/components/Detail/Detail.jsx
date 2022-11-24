@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { getDetail, clearDetail } from "../../redux/actions";
+import loading from "../Cards/loading.gif";
 
 function Detail(props) {
   const detail = useSelector((state) => state.Detail);
@@ -16,7 +17,7 @@ function Detail(props) {
   }, []);
   return (
     <DetailContainer>
-      {detail ? (
+      {detail.name ? (
         <div className="detail_body">
           <div className="detail_header">
             <NavLink to="/home" className="detail_active">
@@ -70,7 +71,7 @@ function Detail(props) {
         </div>
       ) : (
         <div className="detail_loading">
-          {/* <img src={loading} /> */}
+          <img src={loading} />
         </div>
       )}
     </DetailContainer>
@@ -181,5 +182,6 @@ const DetailContainer = styled.div`
     height: 100%;
     justify-content: center;
     align-items: center;
+    padding-top: 20rem;
   }
 `;

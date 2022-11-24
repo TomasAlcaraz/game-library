@@ -26,6 +26,8 @@ const CardContainer = styled.nav`
   @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,200&display=swap");
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: #1c2433;
   border-radius: 5px;
   margin-top: 1rem;
@@ -55,7 +57,6 @@ const CardContainer = styled.nav`
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    margin: 0 auto;
     font-family: "Rubik", sans-serif;
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;

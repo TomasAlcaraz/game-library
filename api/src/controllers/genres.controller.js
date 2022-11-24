@@ -13,6 +13,7 @@ genresContrl.allGenres = async (req, res) => {
   try {
     const localGenres = await Genre.findAll();
     if (localGenres.length) return res.json(localGenres)
+    
     const genresAPI = await dataGenres();
     genresAPI.results.forEach((g) => {
       Genre.findOrCreate({

@@ -52,6 +52,8 @@ const HomeContainer = styled.nav`
     display: flex;
     width: 100%;
     flex-direction: column;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
     h2 {
       color: white;
       left: 2rem;

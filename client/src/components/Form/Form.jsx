@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { addGame } from "../../redux/actions";
+import { addGame, getAllGames } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 
 export default function Form() {
@@ -41,7 +41,7 @@ export default function Form() {
     return "";
   }
   // add game
- let input;
+  let input;
   const dispatch = useDispatch();
   function handleSubmit(e) {
     e.preventDefault();
@@ -53,10 +53,12 @@ export default function Form() {
         rating: rating,
         image: image,
         platforms: markedP,
+        genres: markedG,
       };
       console.log(input);
       dispatch(addGame(input));
       alert("Game added successfully!");
+      dispatch(getAllGames());
       history.push("/home");
     }
   }

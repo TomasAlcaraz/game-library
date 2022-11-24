@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { filterBy, orderBy, getAllGames } from "../../redux/actions";
+import {
+  filterBy,
+  orderBy,
+  getAllGames,
+  clearGames,
+  clearFilters,
+} from "../../redux/actions";
 import restart from "./icons-reset.png";
 
 export default function Filters() {
@@ -11,12 +17,16 @@ export default function Filters() {
   const genres = useSelector((state) => state.Genres);
   useEffect(() => {
     if (state === "restart") {
+      dispatch(clearGames());
+      dispatch(clearFilters());
       dispatch(getAllGames());
     }
-    if (order === "genres" || order === "genres") {
+    if (order === "genres" || order === "origin") {
+      // dispatch(clearFilters());
       dispatch(filterBy(order, state));
     }
     if (order === "aphabeticaly" || order === "rating") {
+      // dispatch(clearFilters());
       dispatch(orderBy(order, state));
     }
   }, [state]);

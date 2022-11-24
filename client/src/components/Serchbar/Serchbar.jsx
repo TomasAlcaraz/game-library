@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import search_icon from "./search_icon.svg";
-import { getFiltersGames, searchByName } from "../../redux/actions";
+import { getSearchedGames, searchByName } from "../../redux/actions";
 
 export default function Serchbar() {
   const dispatch = useDispatch();
@@ -15,12 +15,12 @@ export default function Serchbar() {
 
   function handleOnSubmit(e) {
     e.preventDefault();
-    if(filters.length) {
-      dispatch(getFiltersGames(name));
-      setName("");
+    if (filters.length) {
+      dispatch(getSearchedGames(name));
+      // setName("");
     } else {
       dispatch(searchByName(name));
-      setName("");
+      // setName("");
     }
   }
 
