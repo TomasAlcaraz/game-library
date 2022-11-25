@@ -26,6 +26,7 @@ const AppContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  padding-bottom: 1rem;
   width: 100%;
   height: 100%;
 `;

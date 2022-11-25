@@ -14,12 +14,14 @@ export default function Filters() {
   const dispatch = useDispatch();
   const [state, setState] = useState();
   const [order, setOrder] = useState();
+  const [selected, setSelected] = useState("");
   const genres = useSelector((state) => state.Genres);
   useEffect(() => {
     if (state === "restart") {
       dispatch(clearGames());
       dispatch(clearFilters());
       dispatch(getAllGames());
+      setState();
     }
     if (order === "genres" || order === "origin") {
       // dispatch(clearFilters());
@@ -36,7 +38,11 @@ export default function Filters() {
         <select
           className="select"
           onClick={() => setOrder("genres")}
-          onChange={(e) => setState(e.target.value)}
+          onChange={(e) => {
+            setState(e.target.value);
+            // setSelected(e.target.value);
+          }}
+          value={selected}
         >
           <option hidden>genres</option>
           {genres.length &&
@@ -51,7 +57,11 @@ export default function Filters() {
         <select
           className="select"
           onClick={() => setOrder("genres")}
-          onChange={(e) => setState(e.target.value)}
+          onChange={(e) => {
+            setState(e.target.value);
+            // setSelected(e.target.value);
+          }}
+          value={selected}
         >
           <option hidden>origin</option>
           <option value="db">DB(ADDED)</option>
@@ -60,7 +70,11 @@ export default function Filters() {
         <select
           className="select"
           onClick={() => setOrder("rating")}
-          onChange={(e) => setState(e.target.value)}
+          onChange={(e) => {
+            setState(e.target.value);
+            // setSelected(e.target.value);
+          }}
+          value={selected}
         >
           <option hidden>rating</option>
           <option value="highest">highest</option>
@@ -69,7 +83,11 @@ export default function Filters() {
         <select
           className="select"
           onClick={() => setOrder("aphabeticaly")}
-          onChange={(e) => setState(e.target.value)}
+          onChange={(e) => {
+            setState(e.target.value);
+            // setSelected(e.target.value);
+          }}
+          value={selected}
         >
           <option hidden>aphabeticaly</option>
           <option value="AZ">A-Z</option>
@@ -81,7 +99,10 @@ export default function Filters() {
           src={restart}
           alt="restart"
           className="restart"
-          onClick={() => setState("restart")}
+          onClick={() => {
+            setState("restart");
+            setSelected("");
+          }}
         />
       </div>
     </FiltersContainer>

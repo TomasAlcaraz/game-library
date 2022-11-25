@@ -98,7 +98,7 @@ export default function rootReducer(state = initialState, action) {
         Filters: gamesAPI,
       };
     }
-    if (action.order === "orinin") {
+    if (action.order === "origin") {
       if (action.payload === "db") {
         return {
           ...state,

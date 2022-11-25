@@ -21,7 +21,6 @@ export function getAllGames() {
   };
 }
 
-
 export function searchByName(name) {
   return async function (dispatch) {
     return await axios
@@ -55,6 +54,15 @@ export function getGenres() {
   };
 }
 
+export function addGame(payload) {
+  return async function () {
+    return await axios
+    .post(`http://localhost:3001/videogames`, payload)
+    .then((res) => console.log(res))
+    .catch((e) => e.message);
+  };
+}
+
 export function filterBy(order, payload) {
   return function (dispatch) {
     dispatch({ type: FILTER_BY, order, payload });
@@ -64,15 +72,6 @@ export function filterBy(order, payload) {
 export function orderBy(order, payload) {
   return function (dispatch) {
     dispatch({ type: ORDER_BY, order, payload });
-  };
-}
-
-export function addGame(payload) {
-  return async function () {
-    return await axios
-    .post(`http://localhost:3001/videogames`, payload)
-    .then((res) => console.log(res))
-    .catch((e) => e.message);
   };
 }
 
