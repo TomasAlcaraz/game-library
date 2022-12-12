@@ -9,6 +9,7 @@ import {
   CLEAR_DETAIL,
   CLEAR_GAMES,
   CLEAR_FILTERS,
+  SET_PAGE,
 } from "../actions";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   Detail: {},
   Genres: [],
   Filters: [],
+  Page: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -143,20 +145,22 @@ export default function rootReducer(state = initialState, action) {
       if (action.payload === "highest") {
         return {
           ...state,
-          Filters: [...select].sort(
-            (prev, next) => next.rating - prev.rating
-          ),
+          Filters: [...select].sort((prev, next) => next.rating - prev.rating),
         };
       }
       if (action.payload === "lowest") {
         return {
           ...state,
-          Filters: [...select].sort(
-            (prev, next) => prev.rating - next.rating
-          ),
+          Filters: [...select].sort((prev, next) => prev.rating - next.rating),
         };
       }
     }
+  }
+  if (action.type === SET_PAGE) {
+    return {
+      ...state,
+      Page: action.payload,
+    };
   }
   return { ...state };
 }

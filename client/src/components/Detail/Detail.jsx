@@ -14,7 +14,8 @@ function Detail(props) {
   }
   useEffect(() => {
     dispatch(getDetail(props.match.params.id));
-  }, []);
+  }, [dispatch, props.match.params.id]);
+
   return (
     <DetailContainer>
       {detail.name ? (
@@ -35,7 +36,7 @@ function Detail(props) {
           </div>
           <div className="detail_content">
             <div className="detail_left_content">
-              <img src={detail.image} />
+              <img src={detail.image} alt="detail"/>
               <div className="detail_platforms_genres">
                 <div className="detail_box">
                   <h3>Platforms:</h3>
@@ -58,7 +59,7 @@ function Detail(props) {
               </div>
             </div>
             <div className="detail_rigth_content">
-              <text
+              <div
                 className="detail_description"
                 dangerouslySetInnerHTML={{ __html: detail.description }}
               />
@@ -71,7 +72,7 @@ function Detail(props) {
         </div>
       ) : (
         <div className="detail_loading">
-          <img src={loading} />
+          <img src={loading} alt="loading"/>
         </div>
       )}
     </DetailContainer>
@@ -134,17 +135,18 @@ const DetailContainer = styled.div`
   .detail_rigth_content {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
+    align-items: stretch;
     padding-bottom: 1rem;
     gap: 1rem;
     background-color: #0a1522;
     height: 40rem;
-    text {
+    .detail_description {
       color: #a2bdd6;
-      height: 30rem;
-      overflow-y: scroll;
+      height: 32rem;
       margin: 1rem;
       padding: 1.5rem;
+      overflow-y: scroll;
       &::-webkit-scrollbar {
         width: 8px;
         height: 8px;

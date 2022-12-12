@@ -16,7 +16,7 @@ function Navbar() {
   useEffect(() => {
     dispatch(getAllGames());
     dispatch(getGenres());
-  }, []);
+  }, [dispatch]);
   return (
     location.pathname !== "/" && (
       <NavContainer>

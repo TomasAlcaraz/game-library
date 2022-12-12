@@ -4,28 +4,20 @@ const { APIKEY } = process.env;
 const axios = require("axios");
 const gameContrl = {};
 
-// api calls function
-
-async function allGames() {
-  let gamesAPI = [];
-  let info = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
-  for (let i = 1; i <= 5; i++) {
-    gamesAPI = gamesAPI.concat(info.data.results);
-    info = await axios.get(info.data.next);
-  }
-
-  return gamesAPI;
-
-  // Pomise.all
-  // const pages = [1, 2, 3, 4, 5].map((page) => {
-  //   return axios.get(
-  //     `https://api.rawg.io/api/games?key=${APIKEY}&page=${page}`
-  //   );
-  // });
-
-  // const games = await Promise.all(pages);
-  // console.log(games);
-  // return games;
+function formatter(arr) {
+  const result = arr.map((game) => {
+    return {
+      id: game.id,
+      name: game.name,
+      image: game.background_image,
+      genres: game.genres.map((g) => g.name),
+      description: game.description,
+      released: game.released,
+      platforms: game.platforms.map((g) => g.platform.name),
+      rating: game.rating,
+    };
+  });
+  return result;
 }
 
 async function dataGames(type, value) {
@@ -58,18 +50,7 @@ gameContrl.getGames = async (req, res) => {
         });
 
         const callAPI = await dataGames("name", name);
-        const gamesAPI = callAPI.map((game) => {
-          return {
-            id: game.id,
-            name: game.name,
-            image: game.background_image,
-            genres: game.genres.map((g) => g.name),
-            description: game.description,
-            released: game.released,
-            platforms: game.platforms.map((g) => g.platform.name),
-            rating: game.rating,
-          };
-        });
+        const gamesAPI = formatter(callAPI);
 
         const result = gamesDB.concat(gamesAPI);
         return res.json(result);
@@ -81,20 +62,14 @@ gameContrl.getGames = async (req, res) => {
       include: [{ model: Genre }],
     });
 
-    const callAPI = await allGames();
-    const gamesAPI = callAPI.map((game) => {
-      return {
-        id: game.id,
-        name: game.name,
-        image: game.background_image,
-        genres: game.genres.map((g) => g.name),
-        description: game.description,
-        released: game.released,
-        platforms: game.platforms.map((g) => g.platform.name),
-        rating: game.rating,
-      };
+    let formated = [];
+    gamesDB.forEach((g) => {
+      formated.push({ ...g, Genres: g.Genres.map((h) => h.name) });
     });
-    const games = gamesDB.concat(gamesAPI);
+
+    const callAPI = await allGames();
+    const gamesAPI = formatter(callAPI);
+    const games = formated.concat(gamesAPI);
     return res.send(games);
   } catch (e) {
     return res.status(404).send("No videogames available");
@@ -113,18 +88,18 @@ gameContrl.getById = async (req, res) => {
       return res.json(gameDB);
     }
 
-    const gameAPI = await dataGames("id", id);
+    const game = await dataGames("id", id);
 
-    if (gameAPI) {
+    if (game) {
       let formated = {
-        id: gameAPI.id,
-        name: gameAPI.name,
-        description: gameAPI.description,
-        image: gameAPI.background_image,
-        released: gameAPI.released,
-        rating: gameAPI.rating,
-        genres: gameAPI.genres.map((g) => g.name),
-        platforms: gameAPI.platforms.map((g) => g.platform.name),
+        id: game.id,
+        name: game.name,
+        image: game.background_image,
+        genres: game.genres.map((g) => g.name),
+        description: game.description,
+        released: game.released,
+        platforms: game.platforms.map((g) => g.platform.name),
+        rating: game.rating,
       };
       return res.json(formated);
     }

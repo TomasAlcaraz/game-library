@@ -7,10 +7,12 @@ module.exports = (sequelize) => {
     "Videogame",
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false,
+        // type: DataTypes.UUID,
+        // defaultValue: DataTypes.UUIDV4,
+        // primaryKey: true,
+        // allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
@@ -18,7 +20,7 @@ module.exports = (sequelize) => {
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        // allowNull: false,
       },
       released: {
         type: DataTypes.DATEONLY,
@@ -35,8 +37,16 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
+      genres: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+      },
       image: {
         type: DataTypes.STRING,
+      },
+      created: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

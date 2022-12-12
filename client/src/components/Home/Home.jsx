@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cards from "../Cards/Cards.jsx";
 import Serchbar from "../Serchbar/Serchbar.jsx";
 import Filters from "../Filters/Filters.jsx";
+import { clearDetail, setPage } from "../../redux/actions/index.js";
 
 export default function Home() {
   // Paginado escalable por la cantidad de juegos
-  const [pages, setPages] = useState(0);
+  const dispatch = useDispatch();
   const allGames = useSelector((state) => state.Games);
   const filters = useSelector((state) => state.Filters);
   const select = filters.length ? filters : allGames;
-  const numPages = Math.round(select.length / 15);
+  const numPages = Math.ceil(select.length / 15);
+  const page = useSelector((state) => state.Page);
   function paging(num) {
     const arrPages = [];
     for (let i = num; i > 0; i--) {
@@ -19,6 +21,12 @@ export default function Home() {
     }
     return arrPages;
   }
+  function handlePages(num) {
+    dispatch(setPage(num));
+  }
+  useEffect(() => {
+    dispatch(clearDetail());
+  }, [dispatch]);
   return (
     <HomeContainer>
       <div className="home">
@@ -30,8 +38,9 @@ export default function Home() {
               {paging(numPages).map((p, i) => (
                 <button
                   key={i}
-                  onClick={() => {
-                    setPages(i * 15);
+                  value={p}
+                  onClick={(e) => {
+                    handlePages(i * 15);
                   }}
                 >
                   {p}
@@ -40,7 +49,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <Cards pages={pages} />
+        <Cards />
       </div>
     </HomeContainer>
   );
@@ -79,7 +88,10 @@ const HomeContainer = styled.nav`
       .pages {
         display: flex;
         align-items: flex-end;
-        height: 1.4rem;
+        overflow-x:scroll;
+        scroll-behavior: smooth;
+        width: 13.8rem;
+        height: 2.5rem;
         gap: 4px;
         background-color: #1a2433;
         box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
@@ -87,6 +99,17 @@ const HomeContainer = styled.nav`
           rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
         padding: 0.8rem;
         border-radius: 3px;
+        &::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+          border-radius: 4px;
+          background-color: #0c1117;
+          display: ruby-base;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #c4c3d6;
+          border-radius: 3px;
+        }
         button {
           border: none;
           outline: none;
@@ -105,5 +128,4 @@ const HomeContainer = styled.nav`
       }
     }
   }
-  
 `;

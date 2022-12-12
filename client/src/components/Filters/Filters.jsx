@@ -7,6 +7,7 @@ import {
   getAllGames,
   clearGames,
   clearFilters,
+  setPage,
 } from "../../redux/actions";
 import restart from "./icons-reset.png";
 
@@ -14,7 +15,7 @@ export default function Filters() {
   const dispatch = useDispatch();
   const [state, setState] = useState();
   const [order, setOrder] = useState();
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("selected");
   const genres = useSelector((state) => state.Genres);
   useEffect(() => {
     if (state === "restart") {
@@ -32,6 +33,9 @@ export default function Filters() {
       dispatch(orderBy(order, state));
     }
   }, [state]);
+  function handlePages(num) {
+    dispatch(setPage(num));
+  }
   return (
     <FiltersContainer>
       <form className="form_filters">
@@ -40,7 +44,7 @@ export default function Filters() {
           onClick={() => setOrder("genres")}
           onChange={(e) => {
             setState(e.target.value);
-            // setSelected(e.target.value);
+            handlePages(0);
           }}
           value={selected}
         >
@@ -59,7 +63,7 @@ export default function Filters() {
           onClick={() => setOrder("genres")}
           onChange={(e) => {
             setState(e.target.value);
-            // setSelected(e.target.value);
+            handlePages(0);
           }}
           value={selected}
         >
@@ -72,7 +76,7 @@ export default function Filters() {
           onClick={() => setOrder("rating")}
           onChange={(e) => {
             setState(e.target.value);
-            // setSelected(e.target.value);
+            handlePages(0);
           }}
           value={selected}
         >

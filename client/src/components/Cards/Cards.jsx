@@ -5,9 +5,10 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import loading from "./loading.gif";
 
-function Cards({ pages }) {
+function Cards() {
   const games = useSelector((state) => state.Games);
   const filters = useSelector((state) => state.Filters);
+  const page = useSelector((state) => state.Page);
   function selection() {
     if (filters.length) {
       return filters;
@@ -19,7 +20,7 @@ function Cards({ pages }) {
       <div className="cards">
         {selection().length ? (
           selection()
-            .slice(pages, pages + 15)
+            .slice(page, page + 15)
             .map((g) => (
               <NavLink to={`/videogame/${g.id}`} className="active">
                 <Card
@@ -33,7 +34,7 @@ function Cards({ pages }) {
             ))
         ) : (
           <div className="loading_cards">
-            <img src={loading} />
+            <img src={loading} alt="loading"/>
           </div>
         )}
       </div>
@@ -46,6 +47,7 @@ export default Cards;
 const CardsContainer = styled.div`
   display: flex;
   width: 100%;
+  height: 100%;
   margin-top: 8rem;
   color: aliceblue;
   justify-content: center;
@@ -55,15 +57,14 @@ const CardsContainer = styled.div`
   .cards {
     display: flex;
     width: 80%;
-    /* margin: 0 12.6rem; */
     justify-content: start;
     gap: 2rem;
     align-items: center;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
     border-radius: 3px;
     flex-wrap: wrap;
     @media (max-width: 768px) {
-      padding: 1.1rem;
+      padding: 0.5rem;
       justify-content: center;
     }
   }

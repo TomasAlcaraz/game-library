@@ -1,8 +1,31 @@
 body {
   /* background-image: url("./background_landingpage.png"); */
-  background-color: #1C273A;
+  background-color: #1c273a;
   background-attachment: fixed;
+  overflow-y: scroll;
 }
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: #2c2a63;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #2763ac;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+body::-webkit-scrollbar-thumb:active {
+  background-color: #2763ac;
+}
+
+body::-webkit-scrollbar-track {
+  background: #2c2a63;
+  border-radius: 4px;
+}
+
 .App {
   text-align: center;
   width: 100%;
