@@ -16,7 +16,7 @@ async function allGames() {
 
   // data for "Pomise.all"
   const arr = [];
-  for (let i = 1; i <= 25; i++) {
+  for (let i = 1; i <= 160; i++) {
     arr.push(i);
   }
   const pages = arr.map((page) => {
@@ -39,7 +39,8 @@ module.exports = async (req, res, next) => {
       const callApi = await allGames();
       const games = formatter(callApi, "games");
       await Videogame.bulkCreate(games);
-      // await Videogame.addGenre(games.genres)
+      // .map((g) => g.name)
+      // await Videogame.addGenre(games.genres);
       swap = false;
     } catch (e) {
       return res.status(404).send(e.message);

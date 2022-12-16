@@ -4,12 +4,19 @@ import Card from "../../components/Card/Card.jsx";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import loading from "./loading.gif";
+import NotFound from "../NotFound/NotFound.jsx";
+import { useState } from "react";
 
 function Cards() {
   const games = useSelector((state) => state.Games);
   const filters = useSelector((state) => state.Filters);
   const page = useSelector((state) => state.Page);
+  const [found, setFound] = useState(true);
+  setTimeout(() => {
+    setFound(false);
+  }, 5000);
   function selection() {
+    // setFound(true);
     if (filters.length) {
       return filters;
     }
@@ -21,10 +28,10 @@ function Cards() {
         {selection().length ? (
           selection()
             .slice(page, page + 15)
-            .map((g) => (
+            .map((g, i) => (
               <NavLink to={`/videogame/${g.id}`} className="active">
                 <Card
-                  key={g.id}
+                  key={i}
                   rating={g.rating}
                   name={g.name}
                   image={g.image}
@@ -32,10 +39,12 @@ function Cards() {
                 />
               </NavLink>
             ))
-        ) : (
+        ) : found ? (
           <div className="loading_cards">
-            <img src={loading} alt="loading"/>
+            <img src={loading} alt="loading" />
           </div>
+        ) : (
+          <NotFound />
         )}
       </div>
     </CardsContainer>
@@ -51,6 +60,9 @@ const CardsContainer = styled.div`
   margin-top: 8rem;
   color: aliceblue;
   justify-content: center;
+  @media (max-width: 768px) {
+    margin-top: 10rem;
+  }
   .active {
     text-decoration: none;
   }

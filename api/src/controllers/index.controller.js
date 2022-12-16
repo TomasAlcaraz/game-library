@@ -37,6 +37,10 @@ controller.getGenres = async (req, res) => {
 controller.getById = async (req, res) => {
   const { id } = req.params;
   try {
+    if (id.length > 6) {
+      const gameDB = await Videogame.findByPk(parseInt(id));
+      return res.json(gameDB);
+    }
     const data = await dataGame(id);
     const game = formatter(data, "id");
     return res.json(game);
@@ -49,12 +53,11 @@ controller.createGame = async (req, res) => {
   try {
     const gameCreated = await Videogame.create(req.body);
     // await Videogame.addGenre(req.genres);
-    req.body.genres.forEach(async (g) => {
-        let genderDB = await Genre.findAll({ where: { name: g } });
-        gameCreated.addGenres(genderDB);
-      });
-      return res.json(gameCreated);
-    // return gameCreated;
+    // req.body.genres.forEach(async (g) => {
+    //     let genderDB = await Genre.findAll({ where: { name: g } });
+    //     await gameCreated.addGenre(genderDB);
+    //   });
+    return res.json(gameCreated);
   } catch (e) {
     return res.status(404).send(e.message);
   }

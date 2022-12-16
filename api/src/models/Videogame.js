@@ -1,6 +1,12 @@
 const { DataTypes, STRING } = require("sequelize");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
+
+function randomNum() {
+  const radom = Math.floor(Math.random() * 100000000);
+  return radom;
+}
+
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define(
@@ -8,12 +14,15 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.INTEGER,
+        defaultValue: randomNum,
         primaryKey: true,
-        // type: DataTypes.UUID,
-        // defaultValue: DataTypes.UUIDV4,
-        // primaryKey: true,
-        // allowNull: false,
       },
+      // serial: {
+      //   type: DataTypes.UUID,
+      //   defaultValue: DataTypes.UUIDV4,
+        
+      //   allowNull: false,
+      // },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -39,7 +48,7 @@ module.exports = (sequelize) => {
       },
       genres: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: false,
+        // allowNull: false,
       },
       image: {
         type: DataTypes.STRING,

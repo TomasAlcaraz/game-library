@@ -104,13 +104,13 @@ export default function rootReducer(state = initialState, action) {
       if (action.payload === "db") {
         return {
           ...state,
-          Filters: state.Games.filter((game) => typeof game.id === "string"),
+          Filters: state.Games.filter((game) => game.id > 1000000),
         };
       }
       if (action.payload === "api") {
         return {
           ...state,
-          Filters: state.Games.filter((game) => typeof game.id === "number"),
+          Filters: state.Games.filter((game) => game.id < 1000000),
         };
       }
     }

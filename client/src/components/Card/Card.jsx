@@ -8,8 +8,8 @@ function Card({ name, image, genres, rating }) {
       <img className="imgGames" src={image} alt="game"></img>
       <div className="content">
         <div className="genres">
-          {genres.map((g) => {
-            return <span>{g}, </span>;
+          {genres.map((g, i) => {
+            return <span key={i}>{g}, </span>;
           })}
         </div>
         <h3>{name}</h3>
@@ -35,7 +35,7 @@ const CardContainer = styled.nav`
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   text-decoration-line: none;
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
   &:hover {
     margin-top: -2rem;
     cursor: pointer;

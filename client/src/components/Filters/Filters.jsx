@@ -15,7 +15,7 @@ export default function Filters() {
   const dispatch = useDispatch();
   const [state, setState] = useState();
   const [order, setOrder] = useState();
-  const [selected, setSelected] = useState("selected");
+  // const [selected, setSelected] = useState("selected");
   const genres = useSelector((state) => state.Genres);
   useEffect(() => {
     if (state === "restart") {
@@ -32,7 +32,7 @@ export default function Filters() {
       // dispatch(clearFilters());
       dispatch(orderBy(order, state));
     }
-  }, [state]);
+  }, [dispatch, state, order]);
   function handlePages(num) {
     dispatch(setPage(num));
   }
@@ -46,13 +46,13 @@ export default function Filters() {
             setState(e.target.value);
             handlePages(0);
           }}
-          value={selected}
+          value={state}
         >
           <option hidden>genres</option>
           {genres.length &&
-            genres.map((g) => {
+            genres.map((g, i) => {
               return (
-                <option key={g.key} value={g.name}>
+                <option key={i} value={g.name}>
                   {g.name}
                 </option>
               );
@@ -60,16 +60,16 @@ export default function Filters() {
         </select>
         <select
           className="select"
-          onClick={() => setOrder("genres")}
+          onClick={() => setOrder("origin")}
           onChange={(e) => {
             setState(e.target.value);
             handlePages(0);
           }}
-          value={selected}
+          value={state}
         >
           <option hidden>origin</option>
           <option value="db">DB(ADDED)</option>
-          <option calue="api">API(EXISTENT)</option>
+          <option value="api">API(EXISTENT)</option>
         </select>
         <select
           className="select"
@@ -78,7 +78,7 @@ export default function Filters() {
             setState(e.target.value);
             handlePages(0);
           }}
-          value={selected}
+          value={state}
         >
           <option hidden>rating</option>
           <option value="highest">highest</option>
@@ -91,7 +91,7 @@ export default function Filters() {
             setState(e.target.value);
             // setSelected(e.target.value);
           }}
-          value={selected}
+          value={state}
         >
           <option hidden>aphabeticaly</option>
           <option value="AZ">A-Z</option>
@@ -105,7 +105,7 @@ export default function Filters() {
           className="restart"
           onClick={() => {
             setState("restart");
-            setSelected("");
+            // setSelected("");
           }}
         />
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import img from "./background_landingpage.png"
+import img from "./background_landingpage.png";
 
 export default function Landing() {
   return (
@@ -14,7 +14,7 @@ export default function Landing() {
 }
 
 const LandingContainer = styled.div`
-display: flex;
+  display: flex;
   width: 100vw;
   height: 100vh;
   background-image: url(${img});

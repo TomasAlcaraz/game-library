@@ -22,15 +22,15 @@ function Navbar() {
       <NavContainer>
         <img src={logo} className="logo" alt="logo" />
         <div className={`links ${clicked ? "active" : ""}`}>
-          <NavLink to="/home">
-            <a onClick={handleClick} href="">
+          <NavLink to="/home" className="navbar_navlink">
+            <div onClick={handleClick} className="link">
               Home
-            </a>
+            </div>
           </NavLink>
-          <NavLink to="/form">
-            <a onClick={handleClick} href="">
+          <NavLink to="/form" className="navbar_navlink">
+            <div onClick={handleClick} className="link">
               Add Games
-            </a>
+            </div>
           </NavLink>
         </div>
         <div className="burguer">
@@ -49,22 +49,21 @@ const NavContainer = styled.nav`
   position: fixed;
   display: flex;
   width: 100%;
-  background-color: #1C273A;
+  background-color: #1c273a;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   align-items: center;
   justify-content: space-between;
   padding: 4px;
-  padding-right: 4rem;
+  padding-right: 5rem;
   .logo {
     width: 3.4rem;
     margin: 0.5rem;
     margin-left: 2rem;
     margin-top: 10px;
   }
-  a {
+  .link {
     color: #acadbf;
-    text-decoration: none;
-    margin-right: 1.1rem;
+    margin-right: 2rem;
   }
   .links {
     position: absolute;
@@ -75,7 +74,10 @@ const NavContainer = styled.nav`
     margin-right: auto;
     text-align: center;
     transition: all 0.5s ease;
-    a {
+    .navbar_navlink {
+      text-decoration: none;
+    }
+    .link {
       color: #d3e2ff;
       font-size: 2rem;
       display: block;
@@ -84,7 +86,7 @@ const NavContainer = styled.nav`
     @media (min-width: 768px) {
       position: initial;
       margin: 0;
-      a {
+      .link {
         font-size: 1.3rem;
         color: #d3e2ff;
         display: inline;
@@ -106,7 +108,7 @@ const NavContainer = styled.nav`
       top: 80%;
       left: 0;
       right: 0;
-      a {
+      .link {
         font-size: 2.8rem;
         margin-top: 4.2rem;
         color: #d3e2ff;

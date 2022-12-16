@@ -43,8 +43,9 @@ export default function Form() {
   // add game
   let input;
   const dispatch = useDispatch();
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    
     if (validate(name, description) === "") {
       input = {
         name: name,
@@ -55,13 +56,12 @@ export default function Form() {
         platforms: markedP,
         genres: markedG,
       };
-      console.log(input);
       dispatch(addGame(input));
-      alert("Game added successfully!");
       dispatch(getAllGames());
       history.push("/home");
     }
   }
+
   return (
     <StyledForm>
       <form

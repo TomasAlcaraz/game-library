@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Cards from "../Cards/Cards.jsx";
@@ -39,6 +39,7 @@ export default function Home() {
                 <button
                   key={i}
                   value={p}
+                  className={`${i === page / 15 ? "page_active" : ""}`}
                   onClick={(e) => {
                     handlePages(i * 15);
                   }}
@@ -99,16 +100,19 @@ const HomeContainer = styled.nav`
           rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
         padding: 0.8rem;
         border-radius: 3px;
+        .page_active{
+          color: #158ad8;
+        }
         &::-webkit-scrollbar {
           width: 8px;
-          height: 8px;
+          height: 12px;
           border-radius: 4px;
           background-color: #0c1117;
           display: ruby-base;
         }
         &::-webkit-scrollbar-thumb {
           background-color: #c4c3d6;
-          border-radius: 3px;
+          border-radius: 4px;
         }
         button {
           border: none;

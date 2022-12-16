@@ -37,8 +37,14 @@ export default function Serchbar() {
           type="text"
           onChange={(e) => handleInputOnChange(e)}
           onKeyPress={(e) => handleOnKeyPress(e)}
+          className="search_text"
         ></input>
-        <img src={search_icon} onClick={(e) => handleOnSubmit(e)}></img>
+        <img
+          src={search_icon}
+          onClick={(e) => handleOnSubmit(e)}
+          className="search_icon"
+          alt="search_icon"
+        ></img>
       </div>
     </SerchContainer>
   );
@@ -60,7 +66,7 @@ const SerchContainer = styled.div`
       width: 18.5rem;
       border: none;
     }
-    img {
+    .search_icon {
       margin-left: 1rem;
       margin-right: 1rem;
       width: 1.5rem;
@@ -68,7 +74,7 @@ const SerchContainer = styled.div`
         cursor: pointer;
       }
     }
-    input {
+    .search_text {
       margin-left: 0.8rem;
       height: 1.7rem;
       width: 17rem;
