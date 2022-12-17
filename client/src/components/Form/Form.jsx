@@ -6,28 +6,29 @@ import { useHistory } from "react-router-dom";
 
 export default function Form() {
   const history = useHistory();
-  const [markedG, setMarkedG] = React.useState([]);
-  const [markedP, setMarkedP] = React.useState([]);
-  const [image, setImage] = React.useState("");
-  const [released, setReleased] = React.useState();
-  const [rating, setRating] = React.useState(0);
+  const [input, setInput] = useState({
+    name: "",
+    description: "",
+    released: "",
+    rating: 0,
+    image: "",
+    platforms: [],
+    genres: [],
+  });
   const genres = useSelector((state) => state.Genres);
   const handleSelector = (type, selection) => {
     if (type === "genres") {
-      if (!markedG.includes(selection) && markedG.length <= 3) {
-        setMarkedG([...markedG, selection]);
+      if (!input.genres.includes(selection) && input.genres.length <= 3) {
+        setInput({...input, genres: [...input.genres, selection]});
       }
     }
     if (type === "platforms") {
-      if (!markedP.includes(selection) && markedP.length <= 5) {
-        setMarkedP([...markedP, selection]);
+      if (!input.platforms.includes(selection) && input.platforms.length <= 5) {
+        setInput({...input, platforms: [...input.platforms, selection]});
       }
     }
   };
-  // validations
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const errMessage = validate(name, description);
+  const errMessage = validate(input.name, input.description);
   function validate(name, description) {
     if (name.length > 30) {
       return "the name is too long";
@@ -35,27 +36,17 @@ export default function Form() {
     if (name.length < 1) {
       return "name must have at least one character";
     }
-    if (description.length < 50) {
+    if (description.length < 40) {
       return "the description must have at least 50 characters";
     }
     return "";
   }
   // add game
-  let input;
   const dispatch = useDispatch();
   async function handleSubmit(e) {
     e.preventDefault();
-    
-    if (validate(name, description) === "") {
-      input = {
-        name: name,
-        description: description,
-        released: released,
-        rating: rating,
-        image: image,
-        platforms: markedP,
-        genres: markedG,
-      };
+
+    if (validate(input.name, input.description) === "") {
       dispatch(addGame(input));
       dispatch(getAllGames());
       history.push("/home");
@@ -73,36 +64,36 @@ export default function Form() {
         <h4>Name:</h4>
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={input.name}
+          onChange={(e) => setInput({...input, name : e.target.value})}
           required
         />
         <h4>Description:</h4>
         <input
           type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={input.description}
+          onChange={(e) => setInput({...input, description : e.target.value})}
           required
         />
         <h4>Rating:</h4>
         <input
           type="number"
           step="any"
-          value={rating}
-          onChange={(e) => setRating(e.target.value)}
+          value={input.rating}
+          onChange={(e) => setInput({...input, rating : e.target.value})}
           required
         />
         <h4>Realeased:</h4>
         <input
           type="date"
-          value={released}
-          onChange={(e) => setReleased(e.target.value)}
+          value={input.released}
+          onChange={(e) => setInput({...input, released : e.target.value})}
           required
         />
         <h4>Platforms:</h4>
         <select
           className="form_select"
-          value={released}
+          value={input.released}
           onChange={(e) => {
             e.preventDefault();
             handleSelector("platforms", e.target.value);
@@ -127,7 +118,7 @@ export default function Form() {
           <option value="Wii U">Wii U</option>
         </select>
         <div className="markeds">
-          {markedP.map((m) => (
+          {input.platforms.map((m) => (
             <span>{m}</span>
           ))}
         </div>
@@ -147,15 +138,15 @@ export default function Form() {
           ))}
         </select>
         <div className="markeds">
-          {markedG.map((m) => (
+          {input.genres.map((m) => (
             <span>{m}</span>
           ))}
         </div>
         <h4>Image: </h4>
         <input
           type="text"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+          value={input.image}
+          onChange={(e) => setInput({...input, image : e.target.value})}
           required
         />
         <span className="err_message">{errMessage}</span>
