@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import Landing from "./components/Landing/Landing.jsx";
 import Form from "./components/Form/Form.jsx";
 import Detail from "./components/Detail/Detail.jsx";
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:3001";
 
 function App() {
   return (

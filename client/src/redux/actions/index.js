@@ -14,7 +14,7 @@ export const SET_PAGE = "SET_PAGE";
 export function getAllGames() {
   return async function (dispatch) {
     return await axios
-      .get("http://localhost:3001/videogames")
+      .get("/videogames")
       .then((res) => {
         dispatch({ type: GET_ALL_GAMES, payload: res.data });
       })
@@ -25,7 +25,7 @@ export function getAllGames() {
 export function searchByName(name) {
   return async function (dispatch) {
     return await axios
-      .get(`http://localhost:3001/videogames?name=${name}`)
+      .get(`/videogames?name=${name}`)
       .then((res) => dispatch({ type: SEARCH_BY_NAME, payload: res.data }))
       .catch((e) => e.message);
   };
@@ -40,7 +40,7 @@ export function searchByName(name) {
 export function getDetail(id) {
   return async function (dispatch) {
     return await axios
-      .get(`http://localhost:3001/videogames/${id}`)
+      .get(`/videogames/${id}`)
       .then((res) => dispatch({ type: GET_DETAIL, payload: res.data }))
       .catch((e) => e.message);
   };
@@ -49,7 +49,7 @@ export function getDetail(id) {
 export function getGenres() {
   return async function (dispatch) {
     return await axios
-      .get(`http://localhost:3001/genres`)
+      .get(`/genres`)
       .then((res) => dispatch({ type: GET_GENRES, payload: res.data }))
       .catch((e) => e.message);
   };
@@ -58,7 +58,7 @@ export function getGenres() {
 export function addGame(payload) {
   return async function () {
     return await axios
-      .post(`http://localhost:3001/videogames`, payload)
+      .post(`/videogames`, payload)
       .then((res) => console.log(res))
       .catch((e) => e.message);
   };
@@ -108,7 +108,7 @@ export function setPage(payload) {
 
 // export function postNewGame (payload) {
 //   return async function(dispatch) {
-//       var json = await axios.post(`http://localhost:3001/videogame`, payload)
+//       var json = await axios.post(`/videogame`, payload)
 //       console.log(json)
 //       return json
 //   }
