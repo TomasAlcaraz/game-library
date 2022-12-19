@@ -16,7 +16,7 @@ async function allGames() {
 
   // data for "Pomise.all"
   const arr = [];
-  for (let i = 1; i <= 160; i++) {
+  for (let i = 1; i <= 100; i++) {
     arr.push(i);
   }
   const pages = arr.map((page) => {

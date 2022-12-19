@@ -59,7 +59,7 @@ export function addGame(payload) {
   return async function () {
     return await axios
       .post(`/videogames`, payload)
-      .then((res) => console.log(res))
+      .then((res) => res)
       .catch((e) => e.message);
   };
 }

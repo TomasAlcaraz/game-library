@@ -29,7 +29,7 @@ function Cards() {
           selection()
             .slice(page, page + 15)
             .map((g, i) => (
-              <NavLink to={`/videogame/${g.id}`} className="active">
+              <NavLink to={`/videogame/${g.id}`} className="active" key={i}>
                 <Card
                   key={i}
                   rating={g.rating}
@@ -76,6 +76,7 @@ const CardsContainer = styled.div`
     border-radius: 3px;
     flex-wrap: wrap;
     @media (max-width: 768px) {
+      margin-top: 5rem;
       padding: 0.5rem;
       justify-content: center;
     }

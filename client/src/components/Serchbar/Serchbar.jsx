@@ -86,4 +86,7 @@ const SerchContainer = styled.div`
       transition: all 0.6s ease;
     }
   }
+  @media (max-width: 768px) {
+    margin-top: -1.8rem;
+  }
 `;

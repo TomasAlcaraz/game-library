@@ -19,12 +19,12 @@ export default function Form() {
   const handleSelector = (type, selection) => {
     if (type === "genres") {
       if (!input.genres.includes(selection) && input.genres.length <= 3) {
-        setInput({...input, genres: [...input.genres, selection]});
+        setInput({ ...input, genres: [...input.genres, selection] });
       }
     }
     if (type === "platforms") {
       if (!input.platforms.includes(selection) && input.platforms.length <= 5) {
-        setInput({...input, platforms: [...input.platforms, selection]});
+        setInput({ ...input, platforms: [...input.platforms, selection] });
       }
     }
   };
@@ -52,7 +52,6 @@ export default function Form() {
       history.push("/home");
     }
   }
-
   return (
     <StyledForm>
       <form
@@ -61,33 +60,38 @@ export default function Form() {
           handleSubmit(e);
         }}
       >
-        <h4>Name:</h4>
-        <input
-          type="text"
-          value={input.name}
-          onChange={(e) => setInput({...input, name : e.target.value})}
-          required
-        />
-        <h4>Description:</h4>
-        <input
-          type="text"
-          value={input.description}
-          onChange={(e) => setInput({...input, description : e.target.value})}
-          required
-        />
+        
+          <h4>Name:</h4>
+          <input
+            type="text"
+            value={input.name}
+            onChange={(e) => setInput({ ...input, name: e.target.value })}
+            required
+          />
+          <h4>Description:</h4>
+          <textarea
+            className="form_description"
+            type="text"
+            value={input.description}
+            onChange={(e) =>
+              setInput({ ...input, description: e.target.value })
+            }
+            required
+          />
+
         <h4>Rating:</h4>
         <input
           type="number"
           step="any"
           value={input.rating}
-          onChange={(e) => setInput({...input, rating : e.target.value})}
+          onChange={(e) => setInput({ ...input, rating: e.target.value })}
           required
         />
         <h4>Realeased:</h4>
         <input
           type="date"
           value={input.released}
-          onChange={(e) => setInput({...input, released : e.target.value})}
+          onChange={(e) => setInput({ ...input, released: e.target.value })}
           required
         />
         <h4>Platforms:</h4>
@@ -118,8 +122,8 @@ export default function Form() {
           <option value="Wii U">Wii U</option>
         </select>
         <div className="markeds">
-          {input.platforms.map((m) => (
-            <span>{m}</span>
+          {input.platforms.map((m, i) => (
+            <span key={i}>{m}</span>
           ))}
         </div>
         <h4>Genres:</h4>
@@ -133,20 +137,22 @@ export default function Form() {
           <option hidden value="selected">
             select
           </option>
-          {genres.map((g) => (
-            <option value={g.name}>{g.name}</option>
+          {genres.map((g, i) => (
+            <option value={g.name} key={i}>
+              {g.name}
+            </option>
           ))}
         </select>
         <div className="markeds">
-          {input.genres.map((m) => (
-            <span>{m}</span>
+          {input.genres.map((m, i) => (
+            <span key={i}>{m}</span>
           ))}
         </div>
         <h4>Image: </h4>
         <input
           type="text"
           value={input.image}
-          onChange={(e) => setInput({...input, image : e.target.value})}
+          onChange={(e) => setInput({ ...input, image: e.target.value })}
           required
         />
         <span className="err_message">{errMessage}</span>
@@ -164,11 +170,23 @@ const StyledForm = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+
+  .form_description {
+    width: 18rem;
+    height: 20rem;
+    background-color: #395b67;
+    border: none;
+    border-radius: 3px;
+    color: #dfe9e0;
+    outline: none;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+
   .form_add_game {
     margin-top: 5rem;
     border-top: #0a7196 solid 7px;
-    width: 35%;
-    height: 72%;
+    width: 50rem;
     padding-bottom: 1.2rem;
     flex-direction: column;
     display: flex;
@@ -176,27 +194,22 @@ const StyledForm = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #0d131b;
-
+    @media (max-width: 768px) {
+      width: 23rem;
+    }
     input {
       background-color: #395b67;
       border: none;
       border-radius: 3px;
-      height: 1.5rem;
+      height: 1.7rem;
       color: #dfe9e0;
       outline: none;
       box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
         rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     }
-
     h4 {
       color: #dfe9e0;
       font-family: "Rubik", sans-serif;
-    }
-  }
-
-  @media (max-width: 768px) {
-    textarea {
-      width: 200px;
     }
   }
   .form_select {
@@ -258,5 +271,6 @@ const StyledForm = styled.div`
     font-family: "Rubik", sans-serif;
     font-size: 1rem;
     color: #b11719;
+    width: 18rem;
   }
 `;

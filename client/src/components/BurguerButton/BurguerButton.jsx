@@ -6,7 +6,7 @@ export default function BurguerButton(props) {
     <>
       <div
         onClick={props.handleClick}
-        class={`icon nav-icon-3 ${props.clicked ? "open" : ""}`}
+        className={`icon nav-icon-3 ${props.clicked ? "open" : ""}`}
       >
         <span></span>
         <span></span>

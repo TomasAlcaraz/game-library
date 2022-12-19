@@ -104,8 +104,8 @@ const HomeContainer = styled.nav`
           color: #158ad8;
         }
         &::-webkit-scrollbar {
-          width: 8px;
-          height: 12px;
+          width: 10px;
+          height: 16px;
           border-radius: 4px;
           background-color: #0c1117;
           display: ruby-base;

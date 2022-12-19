@@ -32,18 +32,20 @@ function Detail(props) {
                 ⮨
               </div>
             </NavLink>
-            <h3 className="detail_name">{detail.name}</h3>
+            <div className="detail_name">
+            <h3>{detail.name}</h3>
+            </div>
           </div>
           <div className="detail_content">
             <div className="detail_left_content">
-              <img src={detail.image} alt="detail"/>
+              <img src={detail.image} alt="detail" />
               <div className="detail_platforms_genres">
                 <div className="detail_box">
                   <h3>Platforms:</h3>
                   <div>
                     {detail.platforms &&
-                      detail.platforms.map((p) => {
-                        return <span>{p}, </span>;
+                      detail.platforms.map((p, i) => {
+                        return <span key={i}>{p}, </span>;
                       })}
                   </div>
                 </div>
@@ -51,8 +53,8 @@ function Detail(props) {
                   <h3>Genres:</h3>
                   <div>
                     {detail.genres &&
-                      detail.genres.map((g) => {
-                        return <span>{g}, </span>;
+                      detail.genres.map((g, i) => {
+                        return <span key={i}>{g}, </span>;
                       })}
                   </div>
                 </div>
@@ -72,7 +74,7 @@ function Detail(props) {
         </div>
       ) : (
         <div className="detail_loading">
-          <img src={loading} alt="loading"/>
+          <img src={loading} alt="loading" />
         </div>
       )}
     </DetailContainer>
@@ -117,7 +119,7 @@ const DetailContainer = styled.div`
     gap: 2rem;
   }
   .detail_name {
-    margin-top: 6rem;
+    margin-top: 3rem;
     color: aliceblue;
     font-size: 3rem;
   }
@@ -185,5 +187,50 @@ const DetailContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding-top: 20rem;
+  }
+  .detail_body {
+    @media (max-width: 768px) {
+      .detail_header {
+        display: flex;
+        width: 90%;
+        gap: 1rem;
+        .detail_name {
+          margin-top: 4rem;
+          display: flex;
+          flex-wrap: wrap;
+          font-size: 2rem;
+        }
+      }
+      .detail_content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .detail_left_content {
+        img {
+          width: 100%;
+          height: 15rem;
+        }
+      }
+      .detail_platforms_genres {
+        display: flex;
+        gap: 4rem;
+        justify-content: space-evenly;
+        h3 {
+          color: #d6dfe6;
+          font-family: "Rubik", sans-serif;
+        }
+        .detail_box {
+          flex-direction: row;
+          flex-wrap: wrap;
+          width: 100%;
+          padding: 0 2rem;
+          margin-bottom: 2rem;
+        }
+      }
+      .detail_rigth_content {
+        width: 100%;
+      }
+    }
   }
 `;

@@ -20,7 +20,9 @@ function Navbar() {
   return (
     location.pathname !== "/" && (
       <NavContainer>
-        <img src={logo} className="logo" alt="logo" />
+        <NavLink to="/home" className="navbar_navlink">
+          <img src={logo} className="logo" alt="logo" />
+        </NavLink>
         <div className={`links ${clicked ? "active" : ""}`}>
           <NavLink to="/home" className="navbar_navlink">
             <div onClick={handleClick} className="link">
@@ -99,14 +101,12 @@ const NavContainer = styled.nav`
     @media (max-width: 768px) {
       display: flex;
       position: absolute;
-      margin-left: auto;
-      margin-right: auto;
       align-items: center;
       flex-direction: column;
       text-align: center;
       gap: 3rem;
-      top: 80%;
-      left: 0;
+      top: 100%;
+      left: -2.5rem;
       right: 0;
       .link {
         font-size: 2.8rem;
@@ -120,14 +120,14 @@ const NavContainer = styled.nav`
       display: none;
     }
     @media (max-width: 768px) {
-      margin-right: 1.8rem;
+      margin-right: 1rem;
       margin-top: 6px;
     }
   }
 `;
 
 const BgDiv = styled.div`
-  background-color: #0c131c;
+  background-color: #1c273a;
   position: absolute;
   top: -1000px;
   left: -1000px;
@@ -138,13 +138,12 @@ const BgDiv = styled.div`
   @media (max-width: 768px) {
     &.active {
       display: flex;
-      align-items: center;
       border-radius: 0 0 40% 0;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      margin-top: 4rem;
+      margin-top: 5rem;
     }
   }
 `;
