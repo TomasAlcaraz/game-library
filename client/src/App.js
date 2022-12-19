@@ -8,7 +8,7 @@ import Landing from "./components/Landing/Landing.jsx";
 import Form from "./components/Form/Form.jsx";
 import Detail from "./components/Detail/Detail.jsx";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://game-library-production.up.railway.app/";
 
 function App() {
   return (
