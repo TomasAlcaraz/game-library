@@ -5,18 +5,8 @@ const axios = require("axios");
 const formatter = require("../functions/formatter");
 
 async function allGames() {
-  // data for ".next"
-  // let gamesAPI = [];
-  // let info = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
-  // for (let i = 1; i <= 5; i++) {
-  //   gamesAPI = gamesAPI.concat(info.data.results);
-  //   info = await axios.get(info.data.next);
-  // }
-  // return gamesAPI;
-
-  // data for "Pomise.all"
   const arr = [];
-  for (let i = 1; i <= 160; i++) {
+  for (let i = 1; i <= 100; i++) {
     arr.push(i);
   }
   const pages = arr.map((page) => {

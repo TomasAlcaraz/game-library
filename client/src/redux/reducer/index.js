@@ -62,15 +62,6 @@ export default function rootReducer(state = initialState, action) {
     };
   }
   if (action.type === SEARCH_BY_NAME) {
-    // const allGames = state.Games;
-    // const searched = allGames.filter((game) =>
-    //   game.name.toLowerCase().includes(action.payload.toLowerCase())
-    // );
-    // return {
-    //   ...state,
-    //   Filters: searched,
-    // };
-
     return {
       ...state,
       Games: action.payload,
@@ -94,7 +85,7 @@ export default function rootReducer(state = initialState, action) {
       const gamesAPI = allGames.filter((game) =>
         game.genres.includes(action.payload)
       );
-      // gamesDB = Videogame.findAll({ where: { genres: action.payload } });
+
       return {
         ...state,
         Filters: gamesAPI,
@@ -102,6 +93,8 @@ export default function rootReducer(state = initialState, action) {
     }
     if (action.order === "origin") {
       if (action.payload === "db") {
+        const result = state.Games.filter((game) => game.id > 100000)
+        console.log(result);
         return {
           ...state,
           Filters: state.Games.filter((game) => game.id > 1000000),
@@ -110,7 +103,7 @@ export default function rootReducer(state = initialState, action) {
       if (action.payload === "api") {
         return {
           ...state,
-          Filters: state.Games.filter((game) => game.id < 1000000),
+          Filters: state.Games.filter((game) => game.id < 10000),
         };
       }
     }

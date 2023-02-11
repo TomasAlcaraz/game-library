@@ -31,12 +31,6 @@ export function searchByName(name) {
   };
 }
 
-// export function searchByName(payload) {
-//   return function (dispatch) {
-//     dispatch({type: SEARCH_BY_NAME, payload});
-//   }
-// }
-
 export function getDetail(id) {
   return async function (dispatch) {
     return await axios
@@ -105,11 +99,3 @@ export function setPage(payload) {
     dispatch({ type: SET_PAGE, payload });
   };
 }
-
-// export function postNewGame (payload) {
-//   return async function(dispatch) {
-//       var json = await axios.post(`http://localhost:3001/videogame`, payload)
-//       console.log(json)
-//       return json
-//   }
-// }
